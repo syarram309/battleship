@@ -1,9 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import javax.sound.sampled.*;
+import java.io.*;
+import sun.audio.*;
   
 public class HelpScreen {
    public static void main(String args[]) {
-      JFrame frame = new JFrame("JTextField Background Demonstration");
+	   Music();
+      JFrame frame = new JFrame("Help");
       final ImageIcon imageIcon = new ImageIcon("C:\\Users\\Sai Yarram\\Documents\\GitHub\\battleship\\Help.JPG");
 	  
 	  String Help = "        	                   Welcome to Fleet Ship!\n\n- Here " +
@@ -28,8 +32,9 @@ public class HelpScreen {
             super.paintComponent(g);
          }
       };
+	  
       textField.setFont(new Font("Helvetica", Font.BOLD, 16));
-		
+	  textField.setEditable(false);	
       frame.getContentPane().add(BorderLayout.CENTER, textField);
       frame.setDefaultCloseOperation(3);
       frame.setSize(600, 600);
@@ -37,4 +42,25 @@ public class HelpScreen {
       frame.setResizable(false);
 	  frame.setLocationRelativeTo(null);
    }
+   
+   
+   public static void Music(){
+				try {
+				File Music = new File("C:\\Users\\Sai Yarram\\Documents\\GitHub\\battleship\\Background.wav");
+				 AudioInputStream audioIn = AudioSystem.getAudioInputStream(Music);
+				 Clip clip = AudioSystem.getClip();
+				 clip.open(audioIn);
+				 clip.loop(5);
+				 
+				 }
+				 
+				 catch (UnsupportedAudioFileException e) {
+					 e.printStackTrace();
+				  } catch (IOException e) {
+					 e.printStackTrace();
+				  } catch (LineUnavailableException e) {
+					 e.printStackTrace();
+				  }
+				
+	}
 }
