@@ -8,7 +8,7 @@ public class HelpScreen {
    public static void main(String args[]) {
 	   Music();
       JFrame frame = new JFrame("Help");
-      final ImageIcon imageIcon = new ImageIcon("C:\\Users\\Sai Yarram\\Documents\\GitHub\\battleship\\Help.JPG");
+      final ImageIcon imageIcon = new ImageIcon("Help.JPG");
 	  
 	  String Help = "        	                   Welcome to Fleet Ship!\n\n- Here " +
 	  "you can find the answers to those general questions you as well\nas read instrucstions"+
@@ -46,7 +46,7 @@ public class HelpScreen {
    
    public static void Music(){
 				try {
-				File Music = new File("C:\\Users\\Sai Yarram\\Documents\\GitHub\\battleship\\Background.wav");
+				File Music = new File("Background.wav");
 				 AudioInputStream audioIn = AudioSystem.getAudioInputStream(Music);
 				 Clip clip = AudioSystem.getClip();
 				 clip.open(audioIn);

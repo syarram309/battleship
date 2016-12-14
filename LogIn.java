@@ -40,12 +40,15 @@ public class LogIn extends JFrame {
 	Color Grey = new Color(192,192,192);
 	
     public LogIn() {
-    image = new ImageIcon("C:\\Users\\Sai Yarram\\Documents\\GitHub\\battleship\\LogIN.JPG").getImage();
+    image = new ImageIcon("LogIn.jpg").getImage();
     
 	
 	JPanel container = new MyBackground();
+	super.setLocationRelativeTo(null);
+
 	container.setLayout(null);
-	
+	super.setLocationRelativeTo(null);
+
 	userField.setBounds(330,100,135,25);
 	userField.setFont(new Font("Serif", Font.BOLD, 24));
 	userField.setBackground(Grey);
@@ -61,7 +64,7 @@ public class LogIn extends JFrame {
 	//loginButton.setContentAreaFilled(false);
 	loginButton.setBorderPainted(true);
 	loginButton.setFont(new Font("Serif", Font.BOLD, 24));
-	loginButton.setForeground(Grey);
+	loginButton.setForeground(Color.BLACK);
 	loginButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 	
 	loginLabel.setBounds(170,100,145,25);
@@ -85,7 +88,6 @@ public class LogIn extends JFrame {
 	
 	add(container);
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
-	setLocationRelativeTo(null);
 	setSize(600, 600);
     setVisible(true);
 	setResizable(false);
@@ -93,106 +95,38 @@ public class LogIn extends JFrame {
 	Music();
     }
 	
-	public void loginEvent(){
+
+		public void loginEvent(){
 			loginButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					String username = userField.getText().toLowerCase();
 					String password = passwordField.getText();
-					 found = PlayerDatabase.runme(username,password);
-					 
-					if(found && !alreadyLoggedIn(username)){
-						Player.setCurrentUser(username);
-						PlayerDatabase.login(username);
-						loggingin(username);
-						JOptionPane.showMessageDialog(null,"Login Verified");
-						HomeScreen home = new HomeScreen();
-						home.setVisible(true);
-						dispose();
-						
-					}else if(!found){
+					
+					Client.sendUser(username, password);
+					
+					if(Client.recieveConfirmation()){
+							Player.setCurrentUser(username);
+							JOptionPane.showMessageDialog(null,"Login Verified");
+							HomeScreen home = new HomeScreen();
+							home.setVisible(true);
+							dispose();
+					}else{
 						userField.setText("");
 						passwordField.setText("");
 						userField.requestFocus();
 					    JOptionPane.showMessageDialog(null,"Wrong Username / Password","ERROR", 2);
 
-						
-				}else if(alreadyLoggedIn(username)){
-					PlayerDatabase.alreadyloggedin(username);
-
-					userField.setText("");
-					passwordField.setText("");
-					userField.requestFocus();
-				    JOptionPane.showMessageDialog(null,"ERROR! ACCOUNT ALREADY SIGNED IN","ERROR", 0);
-
-				}
+					}
+					
+					
 			}
 		});
 	}
 
-	public static boolean alreadyLoggedIn(String name){
-			loggedin = false;
-			String username = name;
-			File file = new File("loggedinplayers");
-			Scanner scan;
-			try {
-				scan = new Scanner(file);
-			
-			while (scan.hasNext()) {
-			    String line = scan.next();
-			    if(line.equals(username)) { 
-			    loggedin = true;
-			    }
-			}
-			scan.close();
-
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return loggedin;
-		}
-
-	public static void loggingin(String name){
-			String username = name;
-			FileWriter writer;
-			try {
-				writer = new FileWriter("loggedinplayers", true);
-				writer.write(username + "\n");
-				writer.close();		
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	}
-
-	public static void endofgamelog(){
-			FileWriter writer,p1writer,p2writer,p3writer;
-			try {
-				writer = new FileWriter("loggedinplayers");
-				writer.write("");
-				
-				p1writer = new FileWriter("player_one's_ships");
-				p1writer.write("");
-				
-				p2writer = new FileWriter("player_two's_ships");
-				p2writer.write("");
-				
-				p3writer = new FileWriter("firecoordinant");
-				p3writer.write("");
-				
-				writer.close();		
-				p1writer.close();
-				p2writer.close();
-				p3writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}	
 	
 	public static void Music(){
 				try {
-				File Music = new File("C:\\Users\\Sai Yarram\\Documents\\GitHub\\battleship\\Background.wav");
+				File Music = new File("Background.wav");
 				 AudioInputStream audioIn = AudioSystem.getAudioInputStream(Music);
 				 Clip clip = AudioSystem.getClip();
 				 clip.open(audioIn);
