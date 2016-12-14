@@ -1,65 +1,67 @@
-    import javax.swing.*;
-	import java.awt.*;
-	import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 
-	public class InitialScreen extends JFrame {
 
-		public static void main(String[] args) {
-			InitialScreen initial = new InitialScreen();
-		}
-				JButton LogInB = new JButton("Log In");
-				JButton NewUserB = new JButton("New User");
-				
-				JPanel InitialScreen = new JPanel();
-				
-				GridLayout experimentLayout = new GridLayout(0,1);
 
-				InitialScreen(){
-					
-					JWindow window = new JWindow();
-					try {
-						window.getContentPane().add(
-						    new JLabel("", new ImageIcon(new URL("http://im2.ezgif.com/tmp/ezgif.com-896f73fa97.gif")), SwingConstants.CENTER));
-					} catch (MalformedURLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					window.setBounds(150, 150, 414, 211);
-					window.setLocationRelativeTo(null);
-
-					window.setVisible(true);
-					try {
-					    Thread.sleep(15000);
-					} catch (InterruptedException e) {
-					    e.printStackTrace();
-					}
-					window.setVisible(false);
-					window.dispose();
-					
-					
-					
-					
-					setSize(300,200);
-					super.setLocationRelativeTo(null);
-
-					InitialScreen.setLayout(experimentLayout);
-					
-					InitialScreen.add(LogInB);
-					InitialScreen.add(NewUserB);
-
-					getContentPane().add(InitialScreen);
-					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					setVisible(true);
-					setResizable(false);
-					loginEvent();
-					signupEvent();
-				}
-				
-				public void loginEvent(){
+public class InitialScreen extends JFrame {
+	/**
+	 * @param args
+	 */
+	
+	public static void main(String[] args) {
+	InitialScreen initial =	new InitialScreen();
+	}
+	
+	private Image image;
+	JButton LogInB = new JButton("Log In");
+	JButton NewUserB = new JButton("New User");
+	Color Grey = new Color(192,192,192);
+	
+	public InitialScreen() {
+		image = new ImageIcon("C:\\Users\\Sai Yarram\\Documents\\GitHub\\battleship\\EZ.gif").getImage();
+		
+		JPanel container = new MyBackground();
+		container.setLayout(null);
+		LogInB.setBounds(250,220,300,70);
+		LogInB.setBorderPainted(true);
+		LogInB.setFont(new Font("Serif", Font.BOLD, 24));
+		LogInB.setForeground(Grey);
+		LogInB.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		
+		NewUserB.setBounds(250,295,300,70);
+		NewUserB.setBorderPainted(true);
+		NewUserB.setFont(new Font("Serif", Font.BOLD, 24));
+		NewUserB.setForeground(Grey);
+		NewUserB.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+			
+		
+		container.add(LogInB);
+		container.add(NewUserB);
+		
+		add(container);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(600, 600);
+		setLocationRelativeTo(null);
+		setVisible(true);
+		setResizable(false);
+		//loginEvent();
+		//signupEvent();
+		
+	}
+	
+	/*public void loginEvent(){
 					LogInB.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent login) {
 							LogIn.main(null);
@@ -76,7 +78,22 @@ import java.net.URL;
 						}
 					
 				});
-			}
-				
+			}*/
+			
+	public class MyBackground extends JPanel {
+		
+		public MyBackground() {
+			setBackground(new Color(0, true));
+		}
+		
+		@Override
+		public void paintComponent(Graphics g) {
+			//Paint background first
+			g.drawImage (image, 0, 0, getWidth (), getHeight (), this);
+			
+			//Paint the rest of the component. Children and self etc.
+			super.paintComponent(g);
+		}
 	}
-
+	
+}
